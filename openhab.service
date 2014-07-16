@@ -1,0 +1,11 @@
+[Unit]
+Description=OpenHAB 1.5.0
+After=docker.service
+Requires=docker.service,openhab-configuration.service
+
+[Service]
+ExecStart=/usr/bin/docker run --rm --name openhab -v /tmp/openhab:/opt/openhab/configurations shift/openhab
+ExecStop=/usr/bin/docker rm -f openhab
+
+[X-Fleet]
+X-Conflicts=openhab.*.service
