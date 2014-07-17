@@ -6,13 +6,13 @@ MAINTAINER Vincent Palmer <shift-docker-openhab@someone.section.me>
 
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y software-properties-common python-software-properties
+RUN DEBIAN_FRONTEND='noninteractive' apt-get update && apt-get install -y software-properties-common python-software-properties
 RUN add-apt-repository ppa:webupd8team/java -y
 
 RUN apt-get update
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 
-RUN apt-get install -y oracle-java7-installer curl unzip
+RUN DEBIAN_FRONTEND='noninteractive' apt-get install -y oracle-java7-installer curl unzip
 
 RUN (mkdir -p /opt/openhab/zips; cd /opt/openhab && curl -L https://github.com/openhab/openhab/releases/download/v1.5.0/distribution-1.5.0-runtime.zip -o zips/runtime.zip && unzip zips/runtime.zip && chmod u+x *.sh)
 RUN (mkdir -p /opt/openhab/zips; cd /opt/openhab/addons && curl -L https://github.com/openhab/openhab/releases/download/v1.5.0/distribution-1.5.0-addons.zip -o ../zips/addons.zip && unzip ../zips/addons.zip)
